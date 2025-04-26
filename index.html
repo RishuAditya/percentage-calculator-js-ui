@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <title>Percentage Calculator</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+   
+    <div class="calculator">
+      <h2>What % is X of Y?</h2>
+      <div class="input-group">
+        <label for="value1">Value (X):</label>
+        <input type="number" id="value1" placeholder="e.g., 40" />
+      </div>
+      <div class="input-group">
+        <label for="total1">Total (Y):</label>
+        <input type="number" id="total1" placeholder="e.g., 200" />
+      </div>
+      <button onclick="calculatePercentageOfTotal()">Calculate1</button>
+      <div class="result" id="result1"></div>
+    </div>
+
+
+    <div class="calculator">
+      <h2>What is X% of Y?</h2>
+      <div class="input-group">
+        <label for="percentValue">Percentage (X%):</label>
+        <input type="number" id="percentValue" placeholder="e.g., 25" />
+      </div>
+      <div class="input-group">
+        <label for="ofValue">Total (Y):</label>
+        <input type="number" id="ofValue" placeholder="e.g., 500" />
+      </div>
+      <button onclick="calculateValueFromPercentage()">Calculate2</button>
+      <div class="result" id="result2"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
