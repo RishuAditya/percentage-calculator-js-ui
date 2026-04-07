@@ -6,16 +6,16 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>OmniMaster Pro v3 | All-in-One Master Tool</title>
+    <title>OmniMaster Pro | Professional Suite</title>
     <link rel="stylesheet" href="style.css" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
     <div class="app-shell">
-      <!-- SIDEBAR: Laptop me side me, Mobile me Top-bar -->
+      <!-- Sidebar: Laptop me side me, Mobile me Top-Bar -->
       <aside class="sidebar">
         <div class="brand">Omni<span>Master</span></div>
         <nav class="menu">
@@ -25,34 +25,26 @@
           <div class="menu-item" onclick="showTab('market')">
             Market & Grocery
           </div>
-          <div class="menu-item" onclick="showTab('build')">
-            Construction (Roof)
-          </div>
+          <div class="menu-item" onclick="showTab('build')">Construction</div>
           <div class="menu-item" onclick="showTab('age')">Age & Date Gap</div>
           <div class="menu-item" onclick="showTab('interest')">
-            Interest (SI/CI)
+            Interest (Biyaj)
           </div>
-          <div class="menu-item" onclick="showTab('profit')">
-            Profit & Target
-          </div>
-          <div class="menu-item" onclick="showTab('percent')">
-            Percentage Suite
-          </div>
-          <div class="menu-item" onclick="showTab('gst')">GST Tax Suite</div>
+          <div class="menu-item" onclick="showTab('profit')">Profit & Loss</div>
+          <div class="menu-item" onclick="showTab('percent')">Percentage</div>
+          <div class="menu-item" onclick="showTab('gst')">GST / Tax</div>
         </nav>
         <div class="theme-box">
-          <button id="themeSwitcher" onclick="toggleTheme()">
-            ☀️ Light Mode
-          </button>
+          <button onclick="toggleTheme()" id="themeBtn">☀️ Mode</button>
         </div>
       </aside>
 
-      <!-- WORKSPACE: Calculation area -->
+      <!-- Main Content Area -->
       <main class="workspace">
-        <!-- 1. Standard Calculator -->
+        <!-- Standard Calculator -->
         <div id="tab-standard" class="tab-content active">
-          <div class="glass-card centered-calc">
-            <div class="display">
+          <div class="pro-card centered-calc">
+            <div class="calc-display-wrap">
               <div id="calc-history"></div>
               <input type="text" id="main-screen" readonly value="0" />
             </div>
@@ -80,171 +72,187 @@
           </div>
         </div>
 
-        <!-- 2. Market/Grocery -->
+        <!-- Market: Dual Logic -->
         <div id="tab-market" class="tab-content">
-          <div class="glass-card">
-            <h3>Grocery Price Finder</h3>
-            <input type="number" id="m-rate" placeholder="1kg Rate (₹)" />
-            <input
-              type="number"
-              id="m-weight"
-              placeholder="Kitna gram chahiye? (e.g. 240)"
-            />
-            <button class="p-btn" onclick="calcMarket()">
-              Total Paisa Nikalo
-            </button>
-            <div id="market-res" class="res-box">---</div>
-            <div id="market-logic" class="logic-box"></div>
-          </div>
-        </div>
-
-        <!-- 3. Construction (Roof/Wall) -->
-        <div id="tab-build" class="tab-content">
-          <div class="glass-card">
-            <h3>Roof / Wall Cost</h3>
-            <div class="flex-row-inputs">
-              <input type="number" id="b-len" placeholder="Length (Feet)" />
-              <input type="number" id="b-wid" placeholder="Width (Feet)" />
+          <div class="dual-grid">
+            <div class="pro-card">
+              <h3>1. Rate to Price</h3>
+              <div class="input-row">
+                <input type="number" id="m1-rate" placeholder="Rate (₹)" />
+                <select id="m1-unit-rate">
+                  <option value="1000">per kg/L</option>
+                  <option value="1">per g/ml</option>
+                </select>
+              </div>
+              <div class="input-row">
+                <input type="number" id="m1-qty" placeholder="Quantity" />
+                <select id="m1-unit-qty">
+                  <option value="1">Gram/ml</option>
+                  <option value="1000">kg/Liter</option>
+                </select>
+              </div>
+              <button class="btn-action" onclick="calcM1()">
+                Calculate Price
+              </button>
+              <div id="m1-res" class="res-display">---</div>
             </div>
-            <input type="number" id="b-rate" placeholder="Rate per SqFt (₹)" />
-            <button class="p-btn" onclick="calcBuild()">Calculate Total</button>
-            <div id="build-res" class="res-box">---</div>
-            <div id="build-logic" class="logic-box"></div>
+            <div class="pro-card">
+              <h3>2. Budget to Weight</h3>
+              <input
+                type="number"
+                id="m2-rate"
+                placeholder="Rate (₹ per kg/L)"
+              />
+              <input type="number" id="m2-budget" placeholder="Budget (₹)" />
+              <button class="btn-action" onclick="calcM2()">
+                Calculate Weight
+              </button>
+              <div id="m2-res" class="res-display">---</div>
+            </div>
           </div>
         </div>
 
-        <!-- 4. Age & Date Gap -->
+        <!-- Construction: Dual Logic -->
+        <div id="tab-build" class="tab-content">
+          <div class="dual-grid">
+            <div class="pro-card">
+              <h3>1. Flooring Bill</h3>
+              <div class="input-row">
+                <input type="number" id="b1-l" placeholder="Length" />
+                <input type="number" id="b1-w" placeholder="Width" />
+                <select id="b1-unit">
+                  <option value="1">Feet</option>
+                  <option value="0.09">Meter</option>
+                </select>
+              </div>
+              <input
+                type="number"
+                id="b1-rate"
+                placeholder="Rate (₹ per Sq Unit)"
+              />
+              <button class="btn-action" onclick="calcB1()">Final Bill</button>
+              <div id="b1-res" class="res-display">---</div>
+            </div>
+            <div class="pro-card">
+              <h3>2. Tile Estimator</h3>
+              <input type="number" id="b2-area" placeholder="Area (SqFt)" />
+              <select id="b2-tile">
+                <option value="4">2x2 Tile (4 SqFt)</option>
+                <option value="2">1x2 Tile (2 SqFt)</option>
+              </select>
+              <button class="btn-action" onclick="calcB2()">Tiles Count</button>
+              <div id="b2-res" class="res-display">---</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Age: Dual Logic -->
         <div id="tab-age" class="tab-content">
-          <div class="flex-row">
-            <div class="glass-card">
+          <div class="dual-grid">
+            <div class="pro-card">
               <h3>1. Age Finder</h3>
               <input type="date" id="age-dob" />
-              <button class="p-btn" onclick="calcAgeOnly()">Check Age</button>
-              <div id="age-res" class="res-box">---</div>
-              <div id="age-logic" class="logic-box"></div>
+              <button class="btn-action" onclick="calcAge()">Find Age</button>
+              <div id="age-res" class="res-display">---</div>
             </div>
-            <div class="glass-card">
-              <h3>2. Gap Between Dates</h3>
-              <input type="date" id="date-start" /><input
-                type="date"
-                id="date-end"
-              />
-              <button class="p-btn btn-sec" onclick="calcDateGap()">
-                Find Gap
-              </button>
-              <div id="gap-res" class="res-box">---</div>
+            <div class="pro-card">
+              <h3>2. Days Count</h3>
+              <input type="date" id="gap-s" /><input type="date" id="gap-e" />
+              <button class="btn-action" onclick="calcGap()">Count Gap</button>
+              <div id="gap-res" class="res-display">---</div>
             </div>
           </div>
         </div>
 
-        <!-- 5. Interest (SI/CI) -->
+        <!-- Interest: Dual Logic -->
         <div id="tab-interest" class="tab-content">
-          <div class="flex-row">
-            <div class="glass-card">
+          <div class="dual-grid">
+            <div class="pro-card">
               <h3>1. Simple Interest</h3>
-              <input type="number" id="si-p" placeholder="Principal (₹)" />
-              <input type="number" id="si-r" placeholder="Rate (%)" />
-              <input type="number" id="si-t" placeholder="Time (Years)" />
-              <button class="p-btn" onclick="calcSI()">Interest Amount</button>
-              <div id="si-res" class="res-box">---</div>
-              <div id="si-logic" class="logic-box"></div>
+              <input type="number" id="si-p" placeholder="Principal" />
+              <input type="number" id="si-r" placeholder="Rate %" />
+              <input type="number" id="si-t" placeholder="Years" />
+              <button class="btn-action" onclick="calcSI()">
+                Get Interest
+              </button>
+              <div id="si-res" class="res-display">---</div>
             </div>
-            <div class="glass-card">
+            <div class="pro-card">
               <h3>2. Compound Interest</h3>
-              <input type="number" id="ci-p" placeholder="Principal (₹)" />
-              <input type="number" id="ci-r" placeholder="Rate (%)" />
-              <input type="number" id="ci-t" placeholder="Time (Years)" />
-              <button class="p-btn btn-sec" onclick="calcCI()">
-                Total with CI
-              </button>
-              <div id="ci-res" class="res-box">---</div>
+              <input type="number" id="ci-p" placeholder="Principal" />
+              <input type="number" id="ci-r" placeholder="Rate %" />
+              <input type="number" id="ci-t" placeholder="Years" />
+              <button class="btn-action" onclick="calcCI()">Get Amount</button>
+              <div id="ci-res" class="res-display">---</div>
             </div>
           </div>
         </div>
 
-        <!-- 6. Profit & Target -->
+        <!-- Profit: Dual Logic -->
         <div id="tab-profit" class="tab-content">
-          <div class="flex-row">
-            <div class="glass-card">
-              <h3>1. Profit/Loss Check</h3>
-              <input type="number" id="pl-cp" placeholder="Buying (CP)" />
-              <input type="number" id="pl-sp" placeholder="Selling (SP)" />
-              <button class="p-btn" onclick="calcPL()">Analyze</button>
-              <div id="pl-res" class="res-box">---</div>
-              <div id="pl-logic" class="logic-box"></div>
+          <div class="dual-grid">
+            <div class="pro-card">
+              <h3>1. Margin Check</h3>
+              <input type="number" id="pl-cp" placeholder="CP" />
+              <input type="number" id="pl-sp" placeholder="SP" />
+              <button class="btn-action" onclick="calcPL()">Analyze</button>
+              <div id="pl-res" class="res-display">---</div>
             </div>
-            <div class="glass-card">
-              <h3>2. Target Sell Price</h3>
-              <input type="number" id="tp-cp" placeholder="Buying Price" />
-              <input
-                type="number"
-                id="tp-perc"
-                placeholder="Desired Profit %"
-              />
-              <button class="p-btn btn-sec" onclick="calcTargetSP()">
-                Find SP
-              </button>
-              <div id="tp-res" class="res-box">---</div>
+            <div class="pro-card">
+              <h3>2. Target Sell</h3>
+              <input type="number" id="tp-cp" placeholder="CP" />
+              <input type="number" id="tp-p" placeholder="Profit Target %" />
+              <button class="btn-action" onclick="calcTP()">Required SP</button>
+              <div id="tp-res" class="res-display">---</div>
             </div>
           </div>
         </div>
 
-        <!-- 7. Percentage Suite -->
+        <!-- Percentage Logic (Original) -->
         <div id="tab-percent" class="tab-content">
-          <div class="flex-row">
-            <div class="glass-card">
-              <h3>1. Find X% of Y</h3>
-              <input type="number" id="pr1-x" placeholder="X (%)" />
-              <input type="number" id="pr1-y" placeholder="Y (Value)" />
-              <button class="p-btn" onclick="calcPr1()">Get Amount</button>
-              <div id="pr1-res" class="res-box">---</div>
-              <div id="pr1-logic" class="logic-box"></div>
+          <div class="dual-grid">
+            <div class="pro-card">
+              <h3>1. What is X% of Y?</h3>
+              <input type="number" id="p1-x" placeholder="X (%)" />
+              <input type="number" id="p1-y" placeholder="Y (Value)" />
+              <button class="btn-action" onclick="calcP1()">Calculate</button>
+              <div id="p1-res" class="res-display">---</div>
             </div>
-            <div class="glass-card">
-              <h3>2. X is what % of Y</h3>
-              <input type="number" id="pr2-x" placeholder="X (Value)" />
-              <input type="number" id="pr2-y" placeholder="Y (Total)" />
-              <button class="p-btn btn-sec" onclick="calcPr2()">Get %</button>
-              <div id="pr2-res" class="res-box">---</div>
+            <div class="pro-card">
+              <h3>2. X is What % of Y?</h3>
+              <input type="number" id="p2-x" placeholder="X (Value)" />
+              <input type="number" id="p2-y" placeholder="Y (Total)" />
+              <button class="btn-action" onclick="calcP2()">Calculate</button>
+              <div id="p2-res" class="res-display">---</div>
             </div>
           </div>
         </div>
 
-        <!-- 8. GST Suite -->
+        <!-- GST Logic -->
         <div id="tab-gst" class="tab-content">
-          <div class="flex-row">
-            <div class="glass-card">
+          <div class="dual-grid">
+            <div class="pro-card">
               <h3>1. Add GST</h3>
-              <input type="number" id="gst-add-amt" placeholder="Amount (₹)" />
-              <select id="gst-add-rate">
-                <option value="5">5% GST</option>
-                <option value="12">12% GST</option>
-                <option value="18" selected>18% GST</option>
-                <option value="28">28% GST</option>
-              </select>
-              <button class="p-btn" onclick="calcGSTAdd()">
-                Find Gross Total
-              </button>
-              <div id="gst-add-res" class="res-box">---</div>
-              <div id="gst-add-logic" class="logic-box"></div>
-            </div>
-            <div class="glass-card">
-              <h3>2. Remove GST</h3>
-              <input
-                type="number"
-                id="gst-rem-amt"
-                placeholder="Bill (Inclusive)"
-              />
-              <select id="gst-rem-rate">
+              <input type="number" id="ga-amt" placeholder="Amount" />
+              <select id="ga-rate">
                 <option value="5">5%</option>
                 <option value="12">12%</option>
                 <option value="18" selected>18%</option>
                 <option value="28">28%</option>
               </select>
-              <button class="p-btn btn-sec" onclick="calcGSTRem()">
-                Base Price
-              </button>
-              <div id="gst-rem-res" class="res-box">---</div>
+              <button class="btn-action" onclick="calcGA()">Add Tax</button>
+              <div id="ga-res" class="res-display">---</div>
+            </div>
+            <div class="pro-card">
+              <h3>2. Remove GST</h3>
+              <input type="number" id="gr-amt" placeholder="Inclusive Amount" />
+              <select id="gr-rate">
+                <option value="18">18%</option>
+                <option value="12">12%</option>
+                <option value="5">5%</option>
+              </select>
+              <button class="btn-action" onclick="calcGR()">Remove Tax</button>
+              <div id="gr-res" class="res-display">---</div>
             </div>
           </div>
         </div>
