@@ -20,6 +20,20 @@
   --input: #f8fafc;
 }
 
+.copyright {
+    margin-top: auto;
+    padding-top: 20px;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    text-align: center;
+    border-top: 1px solid var(--border);
+}
+
+/* Mobile me copyright hide karne ke liye (Optional) */
+@media (max-width: 950px) {
+    .copyright { display: none; }
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
