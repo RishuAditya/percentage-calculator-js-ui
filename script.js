@@ -1,4 +1,9 @@
-// Tab switching
+/**
+ * OmniCalc Master Logic
+ * Saare world devices ke liye optimised
+ */
+
+// Tabs change karne ka logic
 function showTab(tabId) {
   document
     .querySelectorAll(".tab-content")
@@ -10,7 +15,7 @@ function showTab(tabId) {
   if (event) event.currentTarget.classList.add("active");
 }
 
-// Theme
+// Light aur Dark mode switch
 function toggleTheme() {
   const root = document.documentElement;
   const isDark = root.getAttribute("data-theme") === "dark";
@@ -20,13 +25,14 @@ function toggleTheme() {
     : "☀️ Light Mode";
 }
 
-// Explainer
+// Logic Explainer Steps
 function explain(id, steps) {
   const box = document.getElementById(id);
-  if (box) box.innerHTML = `<b>🎓 Funny Explains:</b><br>` + steps.join("<br>");
+  if (box)
+    box.innerHTML = `<b>🎓 Funny Explainer:</b><br>` + steps.join("<br>");
 }
 
-// Standard Calc
+// --- STANDARD CALCULATOR ---
 let screen = document.getElementById("main-screen");
 function num(n) {
   if (screen.value === "0") screen.value = n;
@@ -54,47 +60,126 @@ function solve() {
   }
 }
 
-// Grocery
+// --- MARKET LOGIC ---
 function calcMarket() {
   let rate = parseFloat(document.getElementById("m-rate").value);
   let weight = parseFloat(document.getElementById("m-weight").value);
+  if (isNaN(rate) || isNaN(weight)) return;
   let res = (rate / 1000) * weight;
   document.getElementById("market-res").innerText = `Price: ₹${res.toFixed(2)}`;
   explain("market-logic", [
-    "Pahle 1 gram ka price nikala (Rate ÷ 1000).",
-    "Phir tere " + weight + "g se guna kar diya.",
-    "Ans: ₹" + res.toFixed(2),
+    "1. Bhai pehle 1 gram ka price nikala (Rate / 1000).",
+    "2. Phir tere demanded weight (" + weight + "g) se multiply kiya.",
+    "3. **Ans:** ₹" + res.toFixed(2) + " chipka de dukan wale ko!",
   ]);
 }
 
-// Construction
+// --- CONSTRUCTION LOGIC ---
 function calcBuild() {
   let l = parseFloat(document.getElementById("b-len").value);
   let w = parseFloat(document.getElementById("b-wid").value);
   let r = parseFloat(document.getElementById("b-rate").value);
+  if (isNaN(l) || isNaN(w) || isNaN(r)) return;
   let total = l * w * r;
   document.getElementById("build-res").innerText =
-    `Total: ₹${total.toLocaleString()}`;
-  explain("build-logic", ["Area nikala (L x W) aur rate se guna kar diya!"]);
+    `Bill: ₹${total.toLocaleString()}`;
+  explain("build-logic", [
+    "L x W karke area nikala: " + l * w + " SqFt.",
+    "Area ko rate ₹" + r + " se guna kiya.",
+    "Bill ban gaya boss!",
+  ]);
 }
 
-// Age
+// --- AGE LOGIC ---
 function calcAgeOnly() {
   let dob = new Date(document.getElementById("age-dob").value);
   if (isNaN(dob)) return;
-  let years = new Date().getFullYear() - dob.getFullYear();
-  document.getElementById("age-res").innerText = `${years} Years Old`;
+  let today = new Date();
+  let years = today.getFullYear() - dob.getFullYear();
+  let months = today.getMonth() - dob.getMonth();
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+  document.getElementById("age-res").innerText = `${years}y, ${months}m Old`;
+  explain("age-logic", [
+    "Tum dharti par " + years + " saal se bojh ho (Just kidding!)",
+  ]);
 }
 
-// Basic Interest, Profit, GST logic... (Slightly shortened for full compatibility)
+function calcDateGap() {
+  let s = new Date(document.getElementById("date-start").value);
+  let e = new Date(document.getElementById("date-end").value);
+  let days = Math.ceil(Math.abs(e - s) / (1000 * 60 * 60 * 24));
+  document.getElementById("gap-res").innerText = `${days} Days Gap`;
+}
+
+// --- INTEREST LOGIC ---
+function calcSI() {
+  let p = parseFloat(document.getElementById("si-p").value);
+  let r = parseFloat(document.getElementById("si-r").value);
+  let t = parseFloat(document.getElementById("si-t").value);
+  let res = (p * r * t) / 100;
+  document.getElementById("si-res").innerText = `Interest: ₹${res.toFixed(2)}`;
+}
+
+function calcCI() {
+  let p = parseFloat(document.getElementById("ci-p").value);
+  let r = parseFloat(document.getElementById("ci-r").value) / 100;
+  let t = parseFloat(document.getElementById("ci-t").value);
+  let amt = p * Math.pow(1 + r, t);
+  document.getElementById("ci-res").innerText = `Total: ₹${amt.toFixed(2)}`;
+}
+
+// --- PROFIT LOGIC ---
+function calcPL() {
+  let cp = parseFloat(document.getElementById("pl-cp").value);
+  let sp = parseFloat(document.getElementById("pl-sp").value);
+  let diff = sp - cp;
+  document.getElementById("pl-res").innerText =
+    (diff >= 0 ? "Profit: ₹" : "Loss: ₹") + Math.abs(diff);
+}
+
+function calcTargetSP() {
+  let cp = parseFloat(document.getElementById("tp-cp").value);
+  let p = parseFloat(document.getElementById("tp-perc").value);
+  let sp = cp + (cp * p) / 100;
+  document.getElementById("tp-res").innerText = `Target SP: ₹${sp.toFixed(2)}`;
+}
+
+// --- PERCENT LOGIC ---
 function calcPr1() {
   let x = parseFloat(document.getElementById("pr1-x").value);
   let y = parseFloat(document.getElementById("pr1-y").value);
   document.getElementById("pr1-res").innerText =
-    `Ans: ${((x / 100) * y).toFixed(2)}`;
+    `Value: ${((x / 100) * y).toFixed(2)}`;
 }
 
-// Keyboard Support
+function calcPr2() {
+  let x = parseFloat(document.getElementById("pr2-x").value);
+  let y = parseFloat(document.getElementById("pr2-y").value);
+  document.getElementById("pr2-res").innerText =
+    `Ans: ${((x / y) * 100).toFixed(2)}%`;
+}
+
+// --- GST LOGIC ---
+function calcGSTAdd() {
+  let amt = parseFloat(document.getElementById("gst-add-amt").value);
+  let rate = parseFloat(document.getElementById("gst-add-rate").value);
+  let gst = (amt * rate) / 100;
+  document.getElementById("gst-add-res").innerText =
+    `Gross: ₹${(amt + gst).toFixed(2)}`;
+}
+
+function calcGSTRem() {
+  let total = parseFloat(document.getElementById("gst-rem-amt").value);
+  let rate = parseFloat(document.getElementById("gst-rem-rate").value);
+  let base = total / (1 + rate / 100);
+  document.getElementById("gst-rem-res").innerText =
+    `Base Price: ₹${base.toFixed(2)}`;
+}
+
+// Keyboard Mapping
 document.addEventListener("keydown", (e) => {
   if (document.activeElement.tagName === "INPUT") return;
   if (/[0-9]/.test(e.key)) num(e.key);
