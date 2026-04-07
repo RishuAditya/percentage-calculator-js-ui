@@ -1,24 +1,21 @@
 /**
- * OMNICALC PRO v3 LOGIC
- * Comented in Hinglish so you understand every part!
+ * OMNICALC Master Logic v3
+ * Bina kisi cut ke pura code!
  */
 
-// --- 1. Tab Navigation: Content switch karne ke liye ---
+// --- 1. Navigation ---
 function showTab(tabId) {
-  // Sab tabs aur menu-items se 'active' class hatao
   document
     .querySelectorAll(".tab-content")
     .forEach((t) => t.classList.remove("active"));
   document
     .querySelectorAll(".menu-item")
     .forEach((m) => m.classList.remove("active"));
-
-  // Naya tab aur clicked menu-item active karo
   document.getElementById("tab-" + tabId).classList.add("active");
-  event.currentTarget.classList.add("active");
+  if (event) event.currentTarget.classList.add("active");
 }
 
-// --- 2. Theme Toggle: Dark aur Light mode switch ---
+// --- 2. Theme Toggle ---
 function toggleTheme() {
   const root = document.documentElement;
   const isDark = root.getAttribute("data-theme") === "dark";
@@ -28,14 +25,12 @@ function toggleTheme() {
     : "☀️ Light Mode";
 }
 
-// --- 3. Funny Explainer Engine: Steps dikhane ke liye ---
+// --- 3. Funny Logic Explainer Helper ---
 function explain(id, steps) {
   const box = document.getElementById(id);
-  if (box) {
+  if (box)
     box.innerHTML =
-      `<b>🎓 Funny Student Explains:</b><br>` +
-      steps.map((s, i) => `<span>${i + 1}. ${s}</span>`).join("<br>");
-  }
+      `<b>🎓 Funny Student Explains:</b><br>` + steps.join("<br>");
 }
 
 // --- 4. Standard Calculator Module ---
@@ -71,16 +66,13 @@ function calcMarket() {
   let rate = parseFloat(document.getElementById("m-rate").value);
   let weight = parseFloat(document.getElementById("m-weight").value);
   if (isNaN(rate) || isNaN(weight)) return;
-
-  // Logic: Pehle 1 gram ka price nikala (Rate/1000) phir use weight se multiply kiya
   let res = (rate / 1000) * weight;
   document.getElementById("market-res").innerText = `Price: ₹${res.toFixed(2)}`;
-
   explain("market-logic", [
-    "1kg yaani 1000g ka rate ₹" + rate + " hai.",
-    "To 1 gram ka hua ₹" + rate / 1000 + " (Rate ÷ 1000).",
-    "Phir tune maanga " + weight + " gram, to multiply kar diya.",
-    "<b>Answer:</b> ₹" + res.toFixed(2) + " dukan wale ko de do mze me!",
+    "Pahle 1kg (1000g) ka rate ₹" + rate + " pakda.",
+    "1 gram ka nikalne k liye rate ko 1000 se divide kiya.",
+    "Phir tere " + weight + "g se guna kar diya.",
+    "<b>Ans:</b> ₹" + res.toFixed(2) + " chipka do dukan wale ko!",
   ]);
 }
 
@@ -90,37 +82,35 @@ function calcBuild() {
   let w = parseFloat(document.getElementById("b-wid").value);
   let r = parseFloat(document.getElementById("b-rate").value);
   if (isNaN(l) || isNaN(w) || isNaN(r)) return;
-
   let area = l * w;
   let total = area * r;
   document.getElementById("build-res").innerText =
-    `Total Bill: ₹${total.toLocaleString()}`;
-
+    `Total: ₹${total.toLocaleString()}`;
   explain("build-logic", [
-    "Pehle Area nikala: " + l + " × " + w + " = " + area + " SqFt.",
-    "Ab " + area + " Square Feet ko ₹" + r + " rate se guna kiya.",
-    "<b>Result:</b> ₹" + total.toLocaleString() + " ka fatka lagega bhai!",
+    "Bhai pehle " + l + " x " + w + " karke Area nikala.",
+    "Phir Area ko rate ₹" + r + " se multiply kiya.",
+    "Itna kharcha ho jayega boss!",
   ]);
 }
 
-// --- 7. Age & Date Logic ---
+// --- 7. Age & Date Gap Logic ---
 function calcAgeOnly() {
   let dob = new Date(document.getElementById("age-dob").value);
-  let now = new Date();
   if (isNaN(dob)) return;
-
+  let now = new Date();
   let years = now.getFullYear() - dob.getFullYear();
   let months = now.getMonth() - dob.getMonth();
   if (months < 0) {
     years--;
     months += 12;
   }
-
   document.getElementById("age-res").innerText = `${years}y, ${months}m Old`;
   explain("age-logic", [
     "Bhai tumne dharti par " +
       years +
-      " saal bita diye, kafi budhe ho gaye ho!",
+      " saal aur " +
+      months +
+      " mahine bita diye hain!",
   ]);
 }
 
@@ -132,16 +122,14 @@ function calcDateGap() {
   document.getElementById("gap-res").innerText = `${days} Days Gap`;
 }
 
-// --- 8. Interest Logic ---
+// --- 8. Interest (SI/CI) Logic ---
 function calcSI() {
   let p = parseFloat(document.getElementById("si-p").value);
   let r = parseFloat(document.getElementById("si-r").value);
   let t = parseFloat(document.getElementById("si-t").value);
   let res = (p * r * t) / 100;
   document.getElementById("si-res").innerText = `Interest: ₹${res.toFixed(2)}`;
-  explain("si-logic", [
-    "(P × R × T) / 100 ka bachpan wala formula lagaya hai.",
-  ]);
+  explain("si-logic", ["(P × R × T) / 100 wala logic lagaya hai."]);
 }
 
 function calcCI() {
@@ -150,6 +138,7 @@ function calcCI() {
   let t = parseFloat(document.getElementById("ci-t").value);
   let amt = p * Math.pow(1 + r, t);
   document.getElementById("ci-res").innerText = `Total: ₹${amt.toFixed(2)}`;
+  explain("ci-logic", ["Interest par bhi interest lag gaya bhai!"]);
 }
 
 // --- 9. Profit & Loss Logic ---
@@ -157,12 +146,16 @@ function calcPL() {
   let cp = parseFloat(document.getElementById("pl-cp").value);
   let sp = parseFloat(document.getElementById("pl-sp").value);
   let diff = sp - cp;
-  let perc = (diff / cp) * 100;
+  let p = (diff / cp) * 100;
   document.getElementById("pl-res").innerText =
     `${diff >= 0 ? "Profit" : "Loss"}: ₹${Math.abs(diff)}`;
   explain("pl-logic", [
-    "Selling Price me se buying price ghata diya, simple! " +
-      (diff >= 0 ? "Party do bhai!" : "Nuksaan ho gya..."),
+    "Becha ₹" +
+      sp +
+      " me aur kharida ₹" +
+      cp +
+      " me. " +
+      (diff >= 0 ? "Party de bhai!" : "Bura hua!"),
   ]);
 }
 
@@ -170,7 +163,8 @@ function calcTargetSP() {
   let cp = parseFloat(document.getElementById("tp-cp").value);
   let target = parseFloat(document.getElementById("tp-perc").value);
   let sp = cp + (cp * target) / 100;
-  document.getElementById("tp-res").innerText = `Price: ₹${sp.toFixed(2)}`;
+  document.getElementById("tp-res").innerText = `Sell at: ₹${sp.toFixed(2)}`;
+  explain("tp-logic", ["CP mein " + target + "% profit add kar diya."]);
 }
 
 // --- 10. Percentage Suite ---
@@ -178,18 +172,19 @@ function calcPr1() {
   let x = parseFloat(document.getElementById("pr1-x").value);
   let y = parseFloat(document.getElementById("pr1-y").value);
   let res = (x / 100) * y;
-  document.getElementById("pr1-res").innerText = `Result: ${res.toFixed(2)}`;
-  explain("pr1-logic", ["X ÷ 100 × Y... ye to maine class 5th me sikha tha!"]);
+  document.getElementById("pr1-res").innerText = `Ans: ${res.toFixed(2)}`;
+  explain("pr1-logic", ["Y ka X% nikalne k liye X ÷ 100 × Y kiya."]);
 }
 
 function calcPr2() {
   let x = parseFloat(document.getElementById("pr2-x").value);
   let y = parseFloat(document.getElementById("pr2-y").value);
   let res = (x / y) * 100;
-  document.getElementById("pr2-res").innerText = `Result: ${res.toFixed(2)}%`;
+  document.getElementById("pr2-res").innerText = `Ans: ${res.toFixed(2)}%`;
+  explain("pr2-logic", ["X ÷ Y × 100 se percentage pata chal gaya."]);
 }
 
-// --- 11. GST Logic ---
+// --- 11. GST Tax Suite ---
 function calcGSTAdd() {
   let amt = parseFloat(document.getElementById("gst-add-amt").value);
   let rate = parseFloat(document.getElementById("gst-add-rate").value);
@@ -197,7 +192,7 @@ function calcGSTAdd() {
   document.getElementById("gst-add-res").innerText =
     `Total: ₹${(amt + gst).toFixed(2)}`;
   explain("gst-add-logic", [
-    "Tax amount nikala aur original price me jod diya. Sarkaar khush!",
+    "Sarkaar ka tax ₹" + gst.toFixed(2) + " jod diya.",
   ]);
 }
 
@@ -205,10 +200,11 @@ function calcGSTRem() {
   let total = parseFloat(document.getElementById("gst-rem-amt").value);
   let rate = parseFloat(document.getElementById("gst-rem-rate").value);
   let net = total / (1 + rate / 100);
-  document.getElementById("gst-rem-res").innerText = `Base: ₹${net.toFixed(2)}`;
+  document.getElementById("gst-rem-res").innerText =
+    `Price: ₹${net.toFixed(2)}`;
 }
 
-// --- Keyboard Support for Standard Calc ---
+// Keyboard Support
 document.addEventListener("keydown", (e) => {
   if (document.activeElement.tagName === "INPUT") return;
   if (/[0-9]/.test(e.key)) num(e.key);
